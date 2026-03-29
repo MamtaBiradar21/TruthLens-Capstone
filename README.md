@@ -1,6 +1,6 @@
 # TruthLens — Multi-Modal Fake Content Detection System
 
-> **Final Year Project | Department of Computer Science & Engineering | 2024–2025**
+> **Final Year Project *
 
 ---
 
