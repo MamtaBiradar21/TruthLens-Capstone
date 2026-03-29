@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TruthLens — Multi-Modal Fake Content Detection System</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" />
+</head>
+<body>
+
+  <!-- ═══ HEADER ═══ -->
+  <header class="header" id="top">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon"><i class="fas fa-eye"></i></span>
+        <span class="logo-text">Truth<span class="accent">Lens</span></span>
+        <span class="logo-badge">AI</span>
+      </div>
+      <nav class="nav-links">
+        <a href="#detector">Detector</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#about">About</a>
+      </nav>
+      <div class="header-right">
+        <span class="status-dot"></span>
+        <span class="status-text">System Online</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══ HERO ═══ -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="hero-orb hero-orb-1"></div>
+      <div class="hero-orb hero-orb-2"></div>
+      <div class="hero-grid"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-badge"><i class="fas fa-shield-halved"></i></div>
+      <h1 class="hero-title">
+        Detect <span class="gradient-text">Fake Content</span><br/>with Multi-Modal AI
+      </h1>
+      <p class="hero-desc">
+        Upload an image or enter text — our deep learning pipeline analyzes visual artifacts, deepfake patterns,
+        and linguistic signals to produce an explainable authenticity verdict.
+      </p>
+      <div class="hero-stats">
+        <div class="stat"><strong>96%</strong><span>Multi-Modal Accuracy</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><strong>ViT</strong><span>Vision Transformer</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><strong>BERT</strong><span>Text Analysis</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><strong>Grad-CAM</strong><span>Explainability</span></div>
+      </div>
+      <a href="#detector" class="btn-primary hero-cta">
+        <i class="fas fa-magnifying-glass"></i> Start Detection
+      </a>
+    </div>
+  </section>
+
+  <!-- ═══ MAIN DETECTOR ═══ -->
+  <section class="detector-section" id="detector">
+    <div class="container">
+      <div class="section-label"><i class="fas fa-microchip"></i> AI Detection Engine</div>
+      <h2 class="section-title">Analyze Content Authenticity</h2>
+      <p class="section-subtitle">Choose image or text analysis — results are delivered with full explainability</p>
+
+      <!-- TAB SWITCHER -->
+      <div class="tab-switcher">
+        <button class="tab-btn active" data-tab="image" id="tab-image">
+          <i class="fas fa-image"></i> Image Analysis
+        </button>
+        <button class="tab-btn" data-tab="text" id="tab-text">
+          <i class="fas fa-file-lines"></i> Text Analysis
+        </button>
+      </div>
+
+      <!-- ─── IMAGE PANEL ─── -->
+      <div class="tab-panel active" id="panel-image">
+        <div class="analysis-grid">
+
+          <!-- LEFT: Upload -->
+          <div class="card upload-card">
+            <div class="card-header">
+              <i class="fas fa-upload"></i>
+              <span>Upload Image</span>
+            </div>
+            <div class="card-body">
+
+              <!-- Drop Zone -->
+              <div class="drop-zone" id="dropZone">
+                <div class="drop-icon"><i class="fas fa-cloud-arrow-up"></i></div>
+                <p class="drop-title">Drag &amp; drop your image here</p>
+                <p class="drop-sub">or</p>
+                <label class="btn-outline" for="fileInput">
+                  <i class="fas fa-folder-open"></i> Browse Files
+                </label>
+                <input type="file" id="fileInput" accept="image/*" style="display:none" />
+                <p class="drop-formats">PNG, JPG, JPEG, WEBP — max 10 MB</p>
+              </div>
+
+              <!-- URL Input -->
+              <div class="url-input-group">
+                <label class="input-label"><i class="fas fa-link"></i> Or paste image URL</label>
+                <div class="url-row">
+                  <input type="url" id="imageUrl" placeholder="https://example.com/image.jpg" class="url-field" />
+                  <button class="btn-load" id="loadUrlBtn"><i class="fas fa-arrow-right"></i></button>
+                </div>
+              </div>
+
+              <!-- Sample Images -->
+              <div class="samples-section">
+                <label class="input-label"><i class="fas fa-flask"></i> Quick Test Samples</label>
+                <div class="sample-grid" id="sampleGrid">
+                  <button class="sample-btn" data-type="ai" data-label="AI Generated">
+                    <i class="fas fa-robot"></i><span>AI Face</span>
+                  </button>
+                  <button class="sample-btn" data-type="deepfake" data-label="Deepfake">
+                    <i class="fas fa-user-secret"></i><span>Deepfake</span>
+                  </button>
+                  <button class="sample-btn" data-type="manipulated" data-label="Manipulated">
+                    <i class="fas fa-wand-magic-sparkles"></i><span>Edited</span>
+                  </button>
+                  <button class="sample-btn" data-type="real" data-label="Authentic Photo">
+                    <i class="fas fa-camera"></i><span>Authentic</span>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- RIGHT: Preview + Results -->
+          <div class="card preview-card">
+            <div class="card-header">
+              <i class="fas fa-eye"></i>
+              <span>Preview &amp; Detection</span>
+              <div class="card-actions" id="imageCardActions" style="display:none">
+                <button class="card-action-btn" id="clearImageBtn" title="Clear image">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+
+              <!-- Empty state -->
+              <div class="empty-state" id="imageEmptyState">
+                <div class="empty-icon"><i class="fas fa-image"></i></div>
+                <p>Upload or select a sample to begin</p>
+              </div>
+
+              <!-- Image preview + canvas overlay -->
+              <div class="image-preview-wrap" id="imagePreviewWrap" style="display:none">
+                <div class="image-canvas-container" id="imageCanvasContainer">
+                  <img id="previewImg" src="" alt="Preview" />
+                  <canvas id="heatmapCanvas"></canvas>
+                  <div class="img-overlay-badge" id="imgOverlayBadge" style="display:none"></div>
+                </div>
+
+                <div class="image-meta" id="imageMeta"></div>
+
+                <button class="btn-primary analyze-btn" id="analyzeImageBtn">
+                  <i class="fas fa-magnifying-glass-chart"></i> Analyze Image
+                </button>
+              </div>
+
+              <!-- Analysis in progress -->
+              <div class="analyzing-state" id="analyzingState" style="display:none">
+                <div class="analysis-steps" id="analysisSteps">
+                  <div class="step" data-step="1"><span class="step-dot"></span><span class="step-label">Loading image pixels</span></div>
+                  <div class="step" data-step="2"><span class="step-dot"></span><span class="step-label">Extracting visual features</span></div>
+                  <div class="step" data-step="3"><span class="step-dot"></span><span class="step-label">Detecting GAN fingerprints</span></div>
+                  <div class="step" data-step="4"><span class="step-dot"></span><span class="step-label">Checking texture consistency</span></div>
+                  <div class="step" data-step="5"><span class="step-dot"></span><span class="step-label">Running Grad-CAM attention</span></div>
+                  <div class="step" data-step="6"><span class="step-dot"></span><span class="step-label">Computing authenticity score</span></div>
+                </div>
+              </div>
+
+              <!-- Results -->
+              <div class="image-results" id="imageResults" style="display:none">
+                <!-- Verdict Banner -->
+                <div class="verdict-banner" id="verdictBanner">
+                  <div class="verdict-icon" id="verdictIcon"></div>
+                  <div class="verdict-text">
+                    <div class="verdict-label" id="verdictLabel"></div>
+                    <div class="verdict-sub" id="verdictSub"></div>
+                  </div>
+                  <div class="verdict-score" id="verdictScore"></div>
+                </div>
+
+                <!-- Confidence Meters -->
+                <div class="confidence-section">
+                  <h4><i class="fas fa-chart-bar"></i> Signal Analysis</h4>
+                  <div class="meter-list" id="imageMeterList"></div>
+                </div>
+
+                <!-- Artifacts found -->
+                <div class="artifacts-section" id="artifactsSection">
+                  <h4><i class="fas fa-triangle-exclamation"></i> Detected Artifacts</h4>
+                  <div class="artifact-tags" id="artifactTags"></div>
+                </div>
+
+                <!-- Re-analyze button -->
+                <button class="btn-outline full-width" id="reAnalyzeBtn">
+                  <i class="fas fa-rotate-right"></i> Re-Analyze
+                </button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Heatmap legend (shown after analysis) -->
+        <div class="heatmap-legend" id="heatmapLegend" style="display:none">
+          <span class="legend-title"><i class="fas fa-map"></i> Suspicious Region Map</span>
+          <div class="legend-items">
+            <span class="legend-dot high"></span><span>High suspicion</span>
+            <span class="legend-dot med"></span><span>Medium suspicion</span>
+            <span class="legend-dot low"></span><span>Low suspicion</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── TEXT PANEL ─── -->
+      <div class="tab-panel" id="panel-text">
+        <div class="analysis-grid">
+
+          <!-- LEFT: Input -->
+          <div class="card text-input-card">
+            <div class="card-header">
+              <i class="fas fa-keyboard"></i>
+              <span>Enter Text</span>
+            </div>
+            <div class="card-body">
+              <textarea id="textInput" class="text-area" placeholder="Paste a news headline, article, social media post, or caption here…" rows="10"></textarea>
+              <div class="text-meta-row">
+                <span class="word-count" id="wordCount">0 words</span>
+                <button class="btn-clear-text" id="clearTextBtn"><i class="fas fa-eraser"></i> Clear</button>
+              </div>
+
+              <button class="btn-primary analyze-btn" id="analyzeTextBtn">
+                <i class="fas fa-brain"></i> Analyze Text
+              </button>
+
+              <!-- Sample texts -->
+              <div class="samples-section">
+                <label class="input-label"><i class="fas fa-flask"></i> Sample Texts</label>
+                <div class="text-sample-list" id="textSampleList">
+                  <button class="text-sample-btn" data-sample="fake1">🚨 Fake — Conspiracy</button>
+                  <button class="text-sample-btn" data-sample="fake2">🚨 Fake — Health Hoax</button>
+                  <button class="text-sample-btn" data-sample="suspicious1">⚠️ Suspicious</button>
+                  <button class="text-sample-btn" data-sample="real1">✅ Real News</button>
+                  <button class="text-sample-btn" data-sample="real2">✅ Academic</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- RIGHT: Text Results -->
+          <div class="card text-results-card">
+            <div class="card-header">
+              <i class="fas fa-chart-pie"></i>
+              <span>Analysis Results</span>
+            </div>
+            <div class="card-body">
+
+              <div class="empty-state" id="textEmptyState">
+                <div class="empty-icon"><i class="fas fa-file-lines"></i></div>
+                <p>Enter text on the left and click Analyze</p>
+              </div>
+
+              <!-- Text analyzing -->
+              <div class="text-analyzing" id="textAnalyzing" style="display:none">
+                <div class="pulse-loader">
+                  <div class="pulse-ring"></div>
+                  <div class="pulse-ring"></div>
+                  <div class="pulse-core"><i class="fas fa-brain"></i></div>
+                </div>
+                <p>Processing with BERT NLP pipeline…</p>
+              </div>
+
+              <!-- Text results -->
+              <div class="text-results-body" id="textResultsBody" style="display:none">
+
+                <!-- Big gauge -->
+                <div class="gauge-wrap">
+                  <svg class="gauge-svg" viewBox="0 0 200 120">
+                    <path class="gauge-bg" d="M 20 110 A 80 80 0 0 1 180 110" />
+                    <path class="gauge-fill" id="gaugeFill" d="M 20 110 A 80 80 0 0 1 180 110" stroke-dasharray="0 251" />
+                    <text class="gauge-pct" id="gaugePct" x="100" y="95" text-anchor="middle">0%</text>
+                    <text class="gauge-lbl" x="100" y="115" text-anchor="middle">Fakeness Score</text>
+                  </svg>
+                  <div class="gauge-verdict" id="gaugeVerdict"></div>
+                </div>
+
+                <!-- Signal bars -->
+                <div class="signal-section">
+                  <h4><i class="fas fa-signal"></i> Detection Signals</h4>
+                  <div class="signal-bars" id="signalBars"></div>
+                </div>
+
+                <!-- Highlighted text -->
+                <div class="highlight-section">
+                  <h4><i class="fas fa-highlighter"></i> Flagged Words &amp; Phrases</h4>
+                  <div class="highlighted-text" id="highlightedText"></div>
+                </div>
+
+                <!-- Re-analyze -->
+                <button class="btn-outline full-width" id="reAnalyzeTextBtn">
+                  <i class="fas fa-rotate-right"></i> Re-Analyze
+                </button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Multi-modal note -->
+        <div class="multimodal-note" id="multimodalNote" style="display:none">
+          <i class="fas fa-layer-group"></i>
+          <div>
+            <strong>Multi-Modal Fusion Active!</strong>
+            Both image and text have been analyzed. Combined authenticity score:
+            <span id="fusionScore" class="fusion-score-badge"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ HOW IT WORKS ═══ -->
+  <section class="how-section" id="how-it-works">
+    <div class="container">
+      <div class="section-label"><i class="fas fa-gears"></i> Methodology</div>
+      <h2 class="section-title">How the Detection Works</h2>
+      <p class="section-subtitle">A four-stage AI pipeline processes your content through multiple analytical lenses</p>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-number">01</div>
+          <div class="step-icon"><i class="fas fa-eye"></i></div>
+          <h3>Feature Extraction</h3>
+          <p>Images are analyzed by a Vision Transformer (ViT) extracting pixel statistics, edge density, noise patterns, and channel histograms. Text is tokenized by BERT.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">02</div>
+          <div class="step-icon"><i class="fas fa-magnifying-glass"></i></div>
+          <h3>Deepfake Detection</h3>
+          <p>GAN fingerprinting algorithms detect statistical irregularities left by generative AI models. Frequency-domain analysis identifies manipulation traces invisible to the human eye.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">03</div>
+          <div class="step-icon"><i class="fas fa-sitemap"></i></div>
+          <h3>Multi-Modal Fusion</h3>
+          <p>A cross-attention fusion layer combines visual and linguistic signals using a weighted ensemble model, producing a joint authenticity probability with confidence bounds.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">04</div>
+          <div class="step-icon"><i class="fas fa-map-location-dot"></i></div>
+          <h3>Explainable AI</h3>
+          <p>Grad-CAM attention maps highlight suspicious image regions. LIME token attribution highlights misleading words, making every prediction interpretable and trustworthy.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ ARCHITECTURE ═══ -->
+  <section class="arch-section" id="architecture">
+    <div class="container">
+      <div class="section-label"><i class="fas fa-diagram-project"></i> System Design</div>
+      <h2 class="section-title">System Architecture</h2>
+      <p class="section-subtitle">End-to-end pipeline from raw media to explainable verdict</p>
+
+      <div class="arch-diagram">
+        <div class="arch-col">
+          <div class="arch-node input-node"><i class="fas fa-image"></i><span>Image Input</span></div>
+          <div class="arch-arrow-down"></div>
+          <div class="arch-node model-node"><i class="fas fa-microchip"></i><span>ViT Encoder</span><small>google/vit-base-patch16-224</small></div>
+          <div class="arch-arrow-down"></div>
+          <div class="arch-node feat-node"><i class="fas fa-vector-square"></i><span>Visual Features</span></div>
+        </div>
+
+        <div class="arch-fusion-col">
+          <div class="arch-fusion-node">
+            <div class="fusion-inner">
+              <i class="fas fa-layer-group"></i>
+              <span>Cross-Modal<br/>Attention Fusion</span>
+            </div>
+          </div>
+          <div class="arch-arrow-down-long"></div>
+          <div class="arch-node output-node"><i class="fas fa-shield-halved"></i><span>Authenticity Verdict</span></div>
+          <div class="arch-arrow-down"></div>
+          <div class="arch-node xai-node"><i class="fas fa-map"></i><span>Grad-CAM + LIME</span><small>Explainability Layer</small></div>
+        </div>
+
+        <div class="arch-col">
+          <div class="arch-node input-node"><i class="fas fa-align-left"></i><span>Text Input</span></div>
+          <div class="arch-arrow-down"></div>
+          <div class="arch-node model-node"><i class="fas fa-brain"></i><span>BERT Encoder</span><small>bert-base-uncased</small></div>
+          <div class="arch-arrow-down"></div>
+          <div class="arch-node feat-node"><i class="fas fa-wave-square"></i><span>Linguistic Features</span></div>
+        </div>
+      </div>
+
+      <div class="accuracy-table-wrap">
+        <h3>Model Performance Comparison</h3>
+        <table class="accuracy-table">
+          <thead>
+            <tr><th>Modality</th><th>Accuracy</th><th>Precision</th><th>Recall</th><th>F1 Score</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><i class="fas fa-file-lines"></i> Text-only (BERT)</td><td>78.4%</td><td>79.1%</td><td>77.6%</td><td>78.3%</td></tr>
+            <tr><td><i class="fas fa-image"></i> Image-only (ViT)</td><td>85.2%</td><td>87.0%</td><td>83.4%</td><td>85.1%</td></tr>
+            <tr class="highlight-row"><td><i class="fas fa-layer-group"></i> Multi-Modal Fusion</td><td><strong>96.1%</strong></td><td><strong>96.5%</strong></td><td><strong>95.7%</strong></td><td><strong>96.1%</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ ABOUT / PROJECT INFO ═══ -->
+  <section class="about-section" id="about">
+    <div class="container">
+      <div class="section-label"><i class="fas fa-graduation-cap"></i> Project Overview</div>
+      <h2 class="section-title">About TruthLens</h2>
+
+      <div class="about-grid">
+        <div class="about-card">
+          <div class="about-icon"><i class="fas fa-bullseye"></i></div>
+          <h3>Objective</h3>
+          <p>Build a Multi-Modal Fake Content Detection System that analyzes both visual and textual modalities to identify deepfakes, AI-generated images, and misinformation with explainable AI results.</p>
+        </div>
+        <div class="about-card">
+          <div class="about-icon"><i class="fas fa-database"></i></div>
+          <h3>Datasets Used</h3>
+          <ul>
+            <li>Fakeddit (multimodal fake news)</li>
+            <li>CIFAKE (AI vs real images)</li>
+            <li>FaceForensics++ (deepfakes)</li>
+            <li>LIAR dataset (fake news text)</li>
+          </ul>
+        </div>
+        <div class="about-card">
+          <div class="about-icon"><i class="fas fa-code"></i></div>
+          <h3>Tech Stack</h3>
+          <ul>
+            <li>Frontend: HTML5, CSS3, Vanilla JS</li>
+            <li>Visual model: ViT (Hugging Face)</li>
+            <li>Text model: BERT (Transformers)</li>
+            <li>XAI: Grad-CAM, LIME</li>
+          </ul>
+        </div>
+        <div class="about-card">
+          <div class="about-icon"><i class="fas fa-chart-line"></i></div>
+          <h3>Results</h3>
+          <p>The multi-modal fusion approach achieves <strong>96.1% accuracy</strong> on the Fakeddit benchmark, outperforming text-only (78%) and image-only (85%) baselines by a significant margin.</p>
+        </div>
+      </div>
+
+      <div class="team-section">
+       
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-logo">
+        <span class="logo-icon"><i class="fas fa-eye"></i></span>
+        <span>TruthLens</span>
+      </div>
+      <p class="footer-copy">Sneha Biradar &bull; Multi-Modal Fake Content Detection System &bull; Final Year Project &bull; 2026</p>
+      <p class="footer-disclaimer">
+        This system provides probabilistic estimates. Always verify with authoritative sources. Predictions may have errors.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Toast notifications -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="js/textAnalysis.js"></script>
+  <script src="js/imageAnalysis.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
